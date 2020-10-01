@@ -2,49 +2,49 @@ from datetime import datetime
 from gateway import db
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    password_hash = db.Column(db.String(128))
-    email = db.Column(db.String(100))
-    phone_number = db.Column(db.String(100))
-    registered_on = db.Column(db.DateTime, nullable=False)
-    admin = db.Column(db.Boolean, nullable=False, default=False)
-    confirmed = db.Column(db.Boolean, nullable=False, default=False)
-    confirmed_on = db.Column(db.DateTime, nullable=True)
+# class User(db.Model):
+#     __tablename__ = 'users'
+#     id = db.Column(db.Integer, primary_key=True)
+#     password_hash = db.Column(db.String(128))
+#     email = db.Column(db.String(100))
+#     phone_number = db.Column(db.String(100))
+#     registered_on = db.Column(db.DateTime, nullable=False)
+#     admin = db.Column(db.Boolean, nullable=False, default=False)
+#     confirmed = db.Column(db.Boolean, nullable=False, default=False)
+#     confirmed_on = db.Column(db.DateTime, nullable=True)
 
-    def __init__(self, email, confirmed,
-                 phone_number,
-                 paid=False, admin=False, confirmed_on=None):
-        self.email = email
-        self.registered_on = datetime.datetime.now()
-        self.admin = admin
-        # self.hash_password = pwd_context.encrypt(password)
-        self.confirmed = confirmed
-        self.confirmed_on = confirmed_on
-        self.phone_number = phone_number
+#     def __init__(self, email, confirmed,
+#                  phone_number,
+#                  paid=False, admin=False, confirmed_on=None):
+#         self.email = email
+#         self.registered_on = datetime.datetime.now()
+#         self.admin = admin
+#         # self.hash_password = pwd_context.encrypt(password)
+#         self.confirmed = confirmed
+#         self.confirmed_on = confirmed_on
+#         self.phone_number = phone_number
 
-    def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
+#     def hash_password(self, password):
+#         self.password_hash = pwd_context.encrypt(password)
 
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password_hash)
+#     def verify_password(self, password):
+#         return pwd_context.verify(password, self.password_hash)
 
-    def generate_auth_token(self, expiration=60000):
-        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'id': self.id})
+#     def generate_auth_token(self, expiration=60000):
+#         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+#         return s.dumps({'id': self.id})
 
-    @staticmethod
-    def verify_auth_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
-        try:
-            data = s.loads(token)
-        except SignatureExpired:
-            return None  # valid token, but expired
-        except BadSignature:
-            return None  # invalid token
-        user = User.query.get(data['id'])
-        return user
+#     @staticmethod
+#     def verify_auth_token(token):
+#         s = Serializer(app.config['SECRET_KEY'])
+#         try:
+#             data = s.loads(token)
+#         except SignatureExpired:
+#             return None  # valid token, but expired
+#         except BadSignature:
+#             return None  # invalid token
+#         user = User.query.get(data['id'])
+#         return user
 
 class MpesaTransaction(db.Model):
     id = db.Column(db.Integer,primary_key=True)
