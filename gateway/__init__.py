@@ -18,10 +18,10 @@ def create_app(config_class=Config):
     with app.app_context():
         db.create_all()
 
-    from blue.api.routes import mod as mod
+    from gateway.api.routes import mod as mod
     app.register_blueprint(mod)
 
     return app
 
 
-from blue import models
+from gateway import models

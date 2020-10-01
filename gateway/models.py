@@ -1,5 +1,5 @@
 from datetime import datetime
-from blue import db
+from gateway import db
 
 
 class User(db.Model):

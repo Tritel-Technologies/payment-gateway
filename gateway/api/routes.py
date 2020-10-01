@@ -1,6 +1,6 @@
 from flask import Blueprint
-from blue import db
-from blue.models import User, Post
+from gateway import db
+from gateway.models import User, Post
 from flask import jsonify
 
 mod = Blueprint('api', __name__)
