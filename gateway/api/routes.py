@@ -1,7 +1,6 @@
 from flask import Blueprint, request, json
 from gateway import db
 from gateway.logic.logic import Logic
-from gateway.models import User
 from flask import jsonify
 from gateway.models import MpesaTransaction
 
