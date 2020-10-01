@@ -3,21 +3,87 @@ from gateway import db
 
 
 class User(db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    email = db.Column(db.String(100))
+    phone_number = db.Column(db.String(100))
+    registered_on = db.Column(db.DateTime, nullable=False)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
+    confirmed = db.Column(db.Boolean, nullable=False, default=False)
+    confirmed_on = db.Column(db.DateTime, nullable=True)
 
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
+    def __init__(self, email, confirmed,
+                 phone_number,
+                 paid=False, admin=False, confirmed_on=None):
+        self.email = email
+        self.registered_on = datetime.datetime.now()
+        self.admin = admin
+        # self.hash_password = pwd_context.encrypt(password)
+        self.confirmed = confirmed
+        self.confirmed_on = confirmed_on
+        self.phone_number = phone_number
 
+    def hash_password(self, password):
+        self.password_hash = pwd_context.encrypt(password)
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password_hash)
 
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
+    def generate_auth_token(self, expiration=60000):
+        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        user = User.query.get(data['id'])
+        return user
+
+class MpesaTransaction(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    transaction_type = db.Column(db.String(10),nullable=True,)
+    transaction_id = db.Column(db.String(10),nullable=True)
+    transaction_time = db.Column(db.DateTime,index=True,default=datetime.utcnow)
+    uiid = db.Column(db.String(100),nullable=False,unique=True)
+    trasnction_amount = db.Column(db.Integer)
+    business_short_code = db.Column(db.String(10))
+    bill_ref = db.Column(db.String(20))
+    msisdn = db.Column(db.String(10))
+    first_name = db.Column(db.String(20))
+    middle_name = db.Column(db.String(20))
+    last_name = db.Column(db.String(20))
+    transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=False)
+    
+    def __init__(self, **kwargs):
+        super(MpesaTransaction, self).__init__(**kwargs)
+
+class TransactionHeader(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    transaction_type = db.Column(db.String())
+    uiid = db.Column(db.String(100),nullable=False,unique=True)
+    time_created = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    time_modefied = db.Column(db.DateTime,nullable=True,)
+    completed = db.Column(db.Boolean, nullable=False, default=False)
+    completed_on = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    mpesa_transaction = db.relationship('MpesaTransaction', backref='transaction_header', lazy=True,uselist=False)
+    transaction_line = db.relationship('TransactionLine', backref='transaction_header',lazy=True)
+
+    def __init__(self, **kwargs):
+        super(TransactionHeader, self).__init__(**kwargs)
+
+class TransactionLine(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    transaction_type = db.Column(db.String(10))
+    amount = db.Column(db.Integer)
+    loan_id = db.Column(db.Integer)
+    transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=False)
+
+    def __init__(self, **kwargs):
+        super(TransactionLine, self).__init__(**kwargs)

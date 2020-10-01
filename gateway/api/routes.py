@@ -1,27 +1,45 @@
-from flask import Blueprint
+from flask import Blueprint, request, json
 from gateway import db
-from gateway.models import User, Post
+from gateway.logic.logic import Logic
+from gateway.models import User
 from flask import jsonify
+from gateway.models import MpesaTransaction
 
-mod = Blueprint('api', __name__)
+mod = Blueprint('api', __name__, url_prefix='/api')
 
 
-@mod.route('/getCategories')
-def get_categories():
-    post = User(username='Tesfa', email='alphatesfa789@gmail.com', password_hash='1234')
-    db.session.add(post)
-    db.session.commit
-    users = User.query.all()
-    print(users[0])
+@mod.route('/payment', methods=['POST'],)
+def make_payment():
+    data = request.json
+    print(request.json['header'])
+    logic = Logic()
+    logic.make_payment(data)
     return 'ss'
 
 
 @mod.route('/addPost')
 def add_post():
-    u = User.query.get(0)
-    p = Post(body='my first post!', author=u)
-    db.session.add(p)
-    db.session.commit()
-    posts = Post.query.all()
-    print(posts)
     return 'post'
+
+
+@mod.route('/validationResponse', methods=['POST'])
+def validation_response():
+    context = {
+        "ResultCode": 0,
+        "ResultDesc": "Accepted"
+    }
+    return json(context)
+
+
+@mod.route('/confirmationCallback', methods=['POST'])
+def confirmation_callback():
+    # payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],
+    #                        phone_number=request.json['MSISDN'], bill_ref=request.json['BillRefNumber'],
+    #                        transaction_id=request.json['TransID'])
+    # with Logic() as logic:
+    #     logic.deposit(res['lines'], res)
+    context = {
+        "ResultCode": 0,
+        "ResultDesc": "Accepted"
+    }
+    return json(context)
