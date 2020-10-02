@@ -36,7 +36,7 @@ class SafMethods:
                 # replace with your phone number to get stk push
                 "PhoneNumber": kwargs['phone_number'],
                 "CallBackURL": "https://api-mobile-money.tritel.co.ke/api/v1/c2b/callback",
-                "AccountReference": "Tritel Mpesa Payment",
+                "AccountReference": "%s" % kwargs['uiid'],
                 "TransactionDesc": "%s" % kwargs['uiid']
             }
             api_url = "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
