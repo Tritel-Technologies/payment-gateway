@@ -33,7 +33,7 @@ def validation_response():
 @mod.route('/confirmationCallback', methods=['POST'])
 def confirmation_callback():
     tx_ref = request.json['BillRefNumber']
-    transaction = MpesaTransaction.query.filter_by(MpesaTransaction.uiid==tx_ref).first()
+    transaction = MpesaTransaction.query.filter(MpesaTransaction.uiid==tx_ref).first()
     transaction.transaction_type = request.json['TransactionType']
     transaction.transaction_id = request.json['TransID']
     # transaction.transaction_time = request.json['TransTime']
