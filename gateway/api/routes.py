@@ -32,6 +32,17 @@ def validation_response():
 
 @mod.route('/confirmationCallback', methods=['POST'])
 def confirmation_callback():
+    tx_ref = request.json['BillRefNumber']
+    transaction = MpesaTransaction.query.filter_by(uiid=tx_ref).first()
+    transaction.transaction_type = request.json['TransactionType']
+    transaction.transaction_id = request.json['TransID']
+    # transaction.transaction_time = request.json['TransTime']
+    transaction.trasnction_amount = request.json['TransAmount']
+    transaction.business_short_code = request.json['BusinessShortCode']
+    transaction.msisdn = request.json['MSISDN']
+    transaction.first_name = request.json['FirstName']
+    db.session.add(transaction)
+    db.session.commit()
     # payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],
     #                        phone_number=request.json['MSISDN'], bill_ref=request.json['BillRefNumber'],
     #                        transaction_id=request.json['TransID'])

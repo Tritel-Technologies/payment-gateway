@@ -18,7 +18,7 @@ class SafMethods:
 
     def send_push(self, **kwargs):
         try:
-
+            # tx_ref = kwargs['uiid']+kwargs['member_number']
             with MpesaAccessToken() as mpesa_token:
                 access_token = mpesa_token.validated_mpesa_access_token
             amount = 0
@@ -37,7 +37,7 @@ class SafMethods:
                 "PhoneNumber": kwargs['phone_number'],
                 "CallBackURL": "https://api-mobile-money.tritel.co.ke/api/v1/c2b/callback",
                 "AccountReference": "Tritel Mpesa Payment",
-                "TransactionDesc": "%s" % kwargs['member_number']
+                "TransactionDesc": "%s" % kwargs['uiid']
             }
             api_url = "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
             headers = {"Authorization": "Bearer %s" % access_token}
