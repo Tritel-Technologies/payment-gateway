@@ -37,6 +37,7 @@ def confirmation_callback():
     tx_ref = request.json['BillRefNumber']
     
     transaction = MpesaTransaction.query.filter(MpesaTransaction.uiid==tx_ref).first()
+    
     if transaction is not None:
         transaction.transaction_type = request.json['TransactionType']
         transaction.transaction_id = request.json['TransID']

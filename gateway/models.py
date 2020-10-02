@@ -59,7 +59,7 @@ class MpesaTransaction(db.Model):
     first_name = db.Column(db.String(20))
     middle_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
-    transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=False)
+    transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=True)
     
     def __init__(self, **kwargs):
         super(MpesaTransaction, self).__init__(**kwargs)
