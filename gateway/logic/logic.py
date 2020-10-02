@@ -16,10 +16,10 @@ class Logic:
             unique_id = str(unique_id)[:6]
             tx_ref = unique_id+pay_load['member_number']
             lines = [TransactionLine(
-                amount=100, transaction_type='deposit') for x in pay_load['lines']]
+                amount=x['amount'], transaction_type=x['transaction_type']) for x in pay_load['lines']]
             transaction = MpesaTransaction(uiid=tx_ref)
             transaction_header = TransactionHeader(
-                transaction_type='paybill', uiid=tx_ref, transaction_line=lines, mpesa_transaction=transaction)
+                transaction_type=pay_load['header']['transaction_type'], uiid=tx_ref, transaction_line=lines, mpesa_transaction=transaction)
             db.session.add(transaction_header)
             db.session.commit()
             with SafMethods() as payments:
