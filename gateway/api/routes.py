@@ -5,6 +5,7 @@ from flask import jsonify
 from gateway.models import MpesaTransaction
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
+from datetime import datetime
 
 mod = Blueprint('api', __name__, url_prefix='/api')
 
@@ -35,13 +36,14 @@ def validation_response():
 @mod.route('/confirmationCallback', methods=['POST'])
 def confirmation_callback():
     tx_ref = request.json['BillRefNumber']
-    
+    datetime_str = request.json['TransTime']
+    datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
     transaction = MpesaTransaction.query.filter(MpesaTransaction.uiid==tx_ref).first()
     
     if transaction is not None:
         transaction.transaction_type = request.json['TransactionType']
         transaction.transaction_id = request.json['TransID']
-        transaction.transaction_time = request.json['TransTime']
+        transaction.transaction_time = datetime_object
         transaction.trasnction_amount = request.json['TransAmount']
         transaction.business_short_code = request.json['BusinessShortCode']
         transaction.msisdn = request.json['MSISDN']
