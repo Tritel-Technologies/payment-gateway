@@ -52,7 +52,7 @@ class MpesaTransaction(db.Model):
     transaction_id = db.Column(db.String(10),nullable=True)
     transaction_time = db.Column(db.DateTime,index=True,default=datetime.utcnow)
     uiid = db.Column(db.String(100),nullable=False,unique=True)
-    trasnction_amount = db.Column(db.Integer)
+    trasnction_amount = db.Column(db.String(10))
     business_short_code = db.Column(db.String(10))
     bill_ref = db.Column(db.String(20))
     msisdn = db.Column(db.String(10))
