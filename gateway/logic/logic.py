@@ -19,7 +19,8 @@ class Logic:
                 amount=x['amount'], transaction_type=x['transaction_type']) for x in pay_load['lines']]
             transaction = MpesaTransaction(uiid=tx_ref)
             transaction_header = TransactionHeader(
-                transaction_type=pay_load['header']['transaction_type'], uiid=tx_ref, transaction_line=lines, mpesa_transaction=transaction)
+                transaction_type=pay_load['header']['transaction_type'], 
+                uiid=tx_ref, transaction_line=lines, mpesa_transaction=transaction)
             db.session.add(transaction_header)
             db.session.commit()
             with SafMethods() as payments:
