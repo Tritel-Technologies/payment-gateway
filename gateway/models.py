@@ -96,7 +96,7 @@ class TransactionLineSchema(ma.ModelSchema):
         model = TransactionLine
 
 class TransactionHeaderSchema(ma.ModelSchema):
-    transaction_line = ma.Nested(TransactionLineSchema,many=True)
+    transaction_line = ma.Nested(TransactionLineSchema, many=True)
 
     class Meta:
         fields = ('transaction_type', 'completed', 'uiid','transaction_line')
