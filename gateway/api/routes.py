@@ -72,3 +72,9 @@ def confirmation_callback():
         "ResultDesc": "Accepted"
     }
     return json(context)
+
+
+@mod.route('getTx', methods=['POST'])
+def get_tx():
+    logic = Logic()
+    return logic.get_tx(request.json['tx'])
