@@ -36,7 +36,7 @@ class Logic:
         transaction = TransactionHeader.query.filter(TransactionHeader.uiid==tx_ref).first()
         transactionHeader_schema = TransactionHeaderSchema()
         data = transactionHeader_schema.dump(transaction)
-        data['uiid'] = data['uiid'][6:]
+        data = data['uiid']
         return data
 
     
