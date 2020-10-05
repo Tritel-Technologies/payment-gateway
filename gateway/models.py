@@ -1,5 +1,6 @@
 from datetime import datetime
 from gateway import db
+from gateway import ma
 
 
 # class User(db.Model):
@@ -87,3 +88,16 @@ class TransactionLine(db.Model):
 
     def __init__(self, **kwargs):
         super(TransactionLine, self).__init__(**kwargs)
+
+
+class TransactionLineSchema(ma.ModelSchema):
+
+    class Meta:
+        model = TransactionLine
+
+class TransactionHeaderSchema(ma.ModelSchema):
+    transaction_line = ma.Nested(TransactionLineSchema,many=True)
+
+    class Meta:
+        fields = ('transaction_type', 'completed', 'uiid','transaction_line')
+        model = TransactionHeader()

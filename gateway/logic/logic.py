@@ -5,6 +5,7 @@ from gateway.saf_end_points.saf_methods import SafMethods
 import uuid
 
 
+
 class Logic:
 
     def __init__(self):
@@ -30,5 +31,11 @@ class Logic:
 
         else:
             print("No")
+    
+    def get_tx(self,tx_ref):
+        transaction = TransactionHeader.query.filter(TransactionHeader.uiid==tx_ref).first()
+        transactionHeader_schema = TransactionHeaderSchema()
+        data = transactionHeader_schema.dump(transaction)
+        return data
 
     

@@ -5,10 +5,12 @@ from config import Config
 from flask_migrate import Migrate
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
+from flask_marshmallow import Marshmallow
 from flask_mail import Mail
 
 db = SQLAlchemy()
 migrate = Migrate()
+ma = Marshmallow()
 
 
 def create_app(config_class=Config):
@@ -17,6 +19,7 @@ def create_app(config_class=Config):
 
     db.init_app(app)
     migrate.init_app(app, db)
+    ma.init_app(app)
 
     with app.app_context():
         db.create_all()

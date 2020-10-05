@@ -6,6 +6,7 @@ from gateway.models import MpesaTransaction
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
 from datetime import datetime
+import requests
 
 mod = Blueprint('api', __name__, url_prefix='/api')
 
@@ -50,6 +51,13 @@ def confirmation_callback():
         transaction.first_name = request.json['FirstName']
         db.session.add(transaction)
         db.session.commit()
+        logic = Logic()
+        data = logic.get_tx(tx_ref)
+
+        api_url = "https://api-sacco.tritel.co.ke/api/postPayment"
+        response = requests.post(
+                api_url, json=data)
+
     else:
         transaction = MpesaTransaction(bill_ref=request.json['BillRefNumber'],uiid=request.json['BillRefNumber'])
         db.session.add(transaction)
