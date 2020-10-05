@@ -81,7 +81,7 @@ class TransactionHeader(db.Model):
 
 class TransactionLine(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    transaction_type = db.Column(db.String(10))
+    transaction_type = db.Column(db.String(50))
     amount = db.Column(db.Integer)
     loan_id = db.Column(db.Integer)
     transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=False)
