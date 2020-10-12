@@ -54,7 +54,7 @@ def confirmation_callback():
         logic = Logic()
         data = logic.get_tx(tx_ref)
 
-        api_url = "https://b1a201847eef.ngrok.io/api/postPayment"
+        api_url = "https://e8651c85f5eb.ngrok.io/api/postPayment"
         response = requests.post(
                 api_url, json=data)
 
