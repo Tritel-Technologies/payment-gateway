@@ -71,7 +71,7 @@ def confirmation_callback():
         "ResultCode": 0,
         "ResultDesc": "Accepted"
     }
-    return json(context)
+    return "json(context)"
 
 
 @mod.route('/getTx', methods=['POST'])
