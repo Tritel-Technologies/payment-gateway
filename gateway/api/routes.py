@@ -54,7 +54,7 @@ def confirmation_callback():
         logic = Logic()
         data = logic.get_tx(tx_ref)
 
-        api_url = "https://api-mobile-money.tritel.co.ke/api/postPayment"
+        api_url = "https://b1a201847eef.ngrok.io/api/postPayment"
         response = requests.post(
                 api_url, json=data)
 
