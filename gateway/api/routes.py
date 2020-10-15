@@ -39,8 +39,9 @@ def confirmation_callback():
     tx_ref = request.json['BillRefNumber']
     datetime_str = request.json['TransTime']
     datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
-    transaction = MpesaTransaction.query.filter(MpesaTransaction.uiid==tx_ref).first()
-    
+    transaction = MpesaTransaction.query.filter(
+        MpesaTransaction.uiid == tx_ref).first()
+
     if transaction is not None:
         transaction.transaction_type = request.json['TransactionType']
         transaction.transaction_id = request.json['TransID']
@@ -56,10 +57,11 @@ def confirmation_callback():
 
         api_url = "https://api-sacco.tritel.co.ke/api/postPayment"
         response = requests.post(
-                api_url, json=data)
+            api_url, json=data)
 
     else:
-        transaction = MpesaTransaction(bill_ref=request.json['BillRefNumber'],uiid=request.json['BillRefNumber'])
+        transaction = MpesaTransaction(
+            bill_ref=request.json['BillRefNumber'], uiid=request.json['BillRefNumber'])
         db.session.add(transaction)
         db.session.commit()
         # payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],

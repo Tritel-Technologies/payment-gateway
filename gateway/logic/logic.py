@@ -5,7 +5,6 @@ from gateway.saf_end_points.saf_methods import SafMethods
 import uuid
 
 
-
 class Logic:
 
     def __init__(self):
@@ -17,10 +16,12 @@ class Logic:
             unique_id = str(unique_id)[:6]
             tx_ref = unique_id+pay_load['member_number']
             lines = [TransactionLine(
-                amount=x['amount'], transaction_type=x['transaction_type']) for x in pay_load['lines']]
+                amount=x['amount'], 
+                transaction_type=x['transaction_type'], 
+                loan_id=x['loan_id'] if 'loan_id' in pay_load['lines']else None) for x in pay_load['lines']]
             transaction = MpesaTransaction(uiid=tx_ref)
             transaction_header = TransactionHeader(
-                transaction_type=pay_load['header']['transaction_type'], 
+                transaction_type=pay_load['header']['transaction_type'],
                 uiid=tx_ref, transaction_line=lines, mpesa_transaction=transaction)
             db.session.add(transaction_header)
             db.session.commit()
@@ -31,11 +32,10 @@ class Logic:
 
         else:
             print("No")
-    
-    def get_tx(self,tx_ref):
-        transaction = TransactionHeader.query.filter(TransactionHeader.uiid==tx_ref).first()
+
+    def get_tx(self, tx_ref):
+        transaction = TransactionHeader.query.filter(
+            TransactionHeader.uiid == tx_ref).first()
         transactionHeader_schema = TransactionHeaderSchema()
         data = transactionHeader_schema.dump(transaction)
         return data
-
-    
