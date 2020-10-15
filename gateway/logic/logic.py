@@ -18,7 +18,7 @@ class Logic:
             lines = [TransactionLine(
                 amount=x['amount'], 
                 transaction_type=x['transaction_type'], 
-                loan_id=x['loan_id'] if 'loan_id' in pay_load['lines']else None) for x in pay_load['lines']]
+                loan_id=x['loan_id'] if 'loan_id' in x else None) for x in pay_load['lines']]
             transaction = MpesaTransaction(uiid=tx_ref)
             transaction_header = TransactionHeader(
                 transaction_type=pay_load['header']['transaction_type'],
