@@ -33,6 +33,7 @@ class Logic:
 
         else:
             print("No")
+            return "No member"
 
     def get_tx(self, tx_ref):
         transaction = TransactionHeader.query.filter(
