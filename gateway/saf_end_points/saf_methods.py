@@ -44,7 +44,7 @@ class SafMethods:
             response = requests.post(
                 api_url, json=request_body, headers=headers)
             print(response)
-            return jsonify(response)
+            return response.text
         except Exception as e:
             return str(e)
 
