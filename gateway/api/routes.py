@@ -34,7 +34,7 @@ def validation_response():
     return json(context)
 
 
-@mod.route('/confirmationCallback', methods=['POST'])
+@mod.route('/api/v1/c2b/callback', methods=['POST'])
 def confirmation_callback():
     tx_ref = request.json['BillRefNumber']
     datetime_str = request.json['TransTime']
