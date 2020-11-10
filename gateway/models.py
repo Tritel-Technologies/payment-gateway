@@ -99,5 +99,5 @@ class TransactionHeaderSchema(ma.ModelSchema):
     transaction_line = ma.Nested(TransactionLineSchema, many=True)
 
     class Meta:
-        fields = ('transaction_type', 'completed', 'uiid','transaction_line')
+        fields = ('transaction_type', 'completed', 'uiid','transaction_line','mpesa_transaction')
         model = TransactionHeader()
