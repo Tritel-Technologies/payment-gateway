@@ -16,8 +16,8 @@ def make_payment():
     data = request.json
     print(request.json['header'])
     logic = Logic()
-    logic.make_payment(data)
-    return 'ss'
+    response = logic.make_payment(data)
+    return response
 
 
 @mod.route('/addPost')

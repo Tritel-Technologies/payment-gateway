@@ -43,6 +43,7 @@ class SafMethods:
             headers = {"Authorization": "Bearer %s" % access_token}
             response = requests.post(
                 api_url, json=request_body, headers=headers)
+            print(response)
             return response
         except Exception as e:
             return str(e)

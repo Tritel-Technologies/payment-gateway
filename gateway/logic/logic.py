@@ -29,6 +29,7 @@ class Logic:
                 response = payments.send_push(
                     args=pay_load['lines'], phone_number=pay_load['phone'],
                     member_number=pay_load['member_number'], uiid=tx_ref)
+                return response
 
         else:
             print("No")
