@@ -32,7 +32,6 @@ class Logic:
                 return response
 
         else:
-            print("No")
             return "No member"
 
     def get_tx(self, tx_ref):
