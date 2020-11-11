@@ -8,11 +8,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.String(128))
     email = db.Column(db.String(100))
-    phone_number = db.Column(db.String(100))
+    phone_no = db.Column(db.String(100))
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
+    name = db.Column(db.String(50))
 
     def __init__(self, email, confirmed,
                  phone_number,
@@ -34,6 +35,18 @@ class User(db.Model):
     def generate_auth_token(self, expiration=60000):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None  # valid token, but expired
+        except BadSignature:
+            return None  # invalid token
+        user = User.query.get(data['id'])
+        return user
 
     @staticmethod
     def verify_auth_token(token):
