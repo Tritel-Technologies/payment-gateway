@@ -54,7 +54,7 @@ def confirmation_callback():
         db.session.commit()
         logic = Logic()
         data = logic.get_tx(tx_ref)
-
+        print(data)
         api_url = "https://api-sacco.tritel.co.ke/api/postPayment"
         response = requests.post(
             api_url, json=data)
