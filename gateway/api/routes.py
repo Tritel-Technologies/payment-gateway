@@ -69,7 +69,7 @@ def confirmation_callback():
 
         db.session.add(transaction)
         db.session.commit()
-        odoo_url = 'http://c6675e44bf65.ngrok.io/payment/mpesa/callback'
+        odoo_url = 'http://0533992e3384.ngrok.io/payment/mpesa/callback'
         requests.post(
             odoo_url, json=request.json)
         # payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],
