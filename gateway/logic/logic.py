@@ -63,10 +63,13 @@ class Logic:
         return data
 
     def post_to_odoo(self, payload):
-        self.invoke('mpesa.payment.transaction', 
-        'create', [{'name': payload['BillRefNumber'], 
-        'customer_name':f"{payload['FirstName']} {payload['LastName']}",
-        "amount":payload['TransAmount'],
-        'phone_number':payload['MSISDN'],
-        "reference":payload['InvoiceNumber'],
-        "payment_date":datetime.strftime(payload['TransTime'],'%Y%m%d%H%M%S')}])
+        try:
+            self.invoke('mpesa.payment.transaction',
+                        'create', [{'name': payload['BillRefNumber'],
+                                    'customer_name':f"{payload['FirstName']} {payload['LastName']}",
+                                    "amount":payload['TransAmount'],
+                                    'phone_number':payload['MSISDN'],
+                                    "reference":payload['InvoiceNumber'],
+                                    "payment_date":datetime.strftime(payload['TransTime'], '%Y%m%d%H%M%S')}])
+        except Exception as e:
+            print(e)
