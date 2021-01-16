@@ -41,7 +41,7 @@ def confirmation_callback():
     datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
     transaction = MpesaTransaction.query.filter(
         MpesaTransaction.uiid == tx_ref).first()
-
+    logic = Logic()
     if transaction is not None:
         transaction.transaction_type = request.json['TransactionType']
         transaction.transaction_id = request.json['TransID']
@@ -70,9 +70,10 @@ def confirmation_callback():
         db.session.add(transaction)
         db.session.commit()
         data = {"params":request.json}
-        odoo_url = 'http://autolamps.tritel.co.ke/payment/mpesa/callback'
-        requests.post(
-            odoo_url, json=data)
+        logic.post_to_odoo(request.json)
+        # odoo_url = 'http://autolamps.tritel.co.ke/payment/mpesa/callback'
+        # requests.post(
+        #     odoo_url, json=data)
         # payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],
         #                        phone_number=request.json['MSISDN'], bill_ref=request.json['BillRefNumber'],
         #                        transaction_id=request.json['TransID'])
