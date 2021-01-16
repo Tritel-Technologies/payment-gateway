@@ -65,9 +65,9 @@ class Logic:
 
     def post_to_odoo(self, payload):
         self.invoke('mpesa.payment.transaction',
-                    'create', [{'name': payload['BillRefNumber'],
+                    'create', {'name': payload['BillRefNumber'],
                                 'customer_name':f"{payload['FirstName']} {payload['LastName']}",
                                 "amount":float(payload['TransAmount']),
                                 'phone_number':payload['MSISDN'],
                                 "reference":payload['InvoiceNumber'],
-                                }])
+                                })
