@@ -4,6 +4,7 @@ from gateway.models import TransactionHeader, TransactionLine, MpesaTransaction
 from gateway.saf_end_points.saf_methods import SafMethods
 import uuid
 import jsonrpclib
+from datetime import datetime
 
 HOST = '45.77.141.173'
 PORT = 9069
