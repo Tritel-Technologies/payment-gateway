@@ -67,7 +67,7 @@ class Logic:
         self.invoke('mpesa.payment.transaction',
                     'create', [{'name': payload['BillRefNumber'],
                                 'customer_name':f"{payload['FirstName']} {payload['LastName']}",
-                                "amount":payload['TransAmount'],
+                                "amount":float(payload['TransAmount']),
                                 'phone_number':payload['MSISDN'],
                                 "reference":payload['InvoiceNumber'],
-                                "payment_date":datetime.strftime(payload['TransTime'], '%Y%m%d%H%M%S')}])
+                                }])
