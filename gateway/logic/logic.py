@@ -5,8 +5,8 @@ from gateway.saf_end_points.saf_methods import SafMethods
 import uuid
 import jsonrpclib
 
-HOST = '45.32.236.42'
-PORT = 8069
+HOST = '45.77.141.173'
+PORT = 9069
 DB = 'autolampstraining'
 USER = 'admin'
 PASS = 'admin'
