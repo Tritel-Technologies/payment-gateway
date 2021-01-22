@@ -1,5 +1,5 @@
 from gateway.models import *
-from gateway import create_app, db
+from gateway import create_app as app, db
 from gateway.models import TransactionHeader, TransactionLine, MpesaTransaction
 from gateway.saf_end_points.saf_methods import SafMethods
 import uuid
@@ -64,10 +64,13 @@ class Logic:
         return data
 
     def post_to_odoo(self, payload):
-        self.invoke('mpesa.payment.transaction',
+        try:
+            self.invoke('mpesa.payment.transaction',
                     'create', {'name': payload['BillRefNumber'],
                                 'customer_name':f"{payload['FirstName']} {payload['LastName']}",
                                 "amount":float(payload['TransAmount']),
                                 'phone_number':payload['MSISDN'],
                                 "reference":payload['InvoiceNumber'],
                                 })
+        except Exception as e:
+            app.logger.error(str(e))
