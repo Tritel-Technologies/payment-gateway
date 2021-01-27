@@ -70,7 +70,7 @@ def confirmation_callback():
         db.session.add(transaction)
         db.session.commit()
         # data = {"params":request.json}
-        logic.post_to_odoo(request.json)
+        # logic.post_to_odoo(request.json)
         # odoo_url = 'http://autolamps.tritel.co.ke/payment/mpesa/callback'
         # requests.post(
         #     odoo_url, json=data)
