@@ -28,9 +28,9 @@ class MpesaAccessToken:
 
 class LipanaMpesaPpassword:
     lipa_time = datetime.now().strftime('%Y%m%d%H%M%S')
-    Business_short_code = "7328975"
+    Business_short_code = "182754"
     Test_c2b_shortcode = "600775"
-    passkey = 'd75fe098517bdafae9d41322b345cd67b5915a92aa5976a700f44a2149c3728c'
+    passkey = 'd81fd7a83a09bda9d6a45c5f19a493a133c7f214762637cd2eb28c45120760ac'
     data_to_encode = Business_short_code + passkey + lipa_time
     online_password = base64.b64encode(data_to_encode.encode())
     decode_password = online_password.decode('utf-8')
