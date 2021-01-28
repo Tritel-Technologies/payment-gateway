@@ -41,7 +41,7 @@ def confirmation_callback():
     datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
     transaction = MpesaTransaction.query.filter(
         MpesaTransaction.uiid == tx_ref).first()
-    logic = Logic()
+    # logic = Logic()
     if transaction is not None:
         transaction.transaction_type = request.json['TransactionType']
         transaction.transaction_id = request.json['TransID']
