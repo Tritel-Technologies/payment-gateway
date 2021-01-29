@@ -15,9 +15,9 @@ mod = Blueprint('api', __name__, url_prefix='/api')
 def make_payment():
     data = request.json
     print(request.json['header'])
-    logic = Logic()
-    response = logic.make_payment(data)
-    return response
+    with Logic() as logic:
+       response = logic.make_payment(data)
+       return response
 
 
 @mod.route('/addPost')
