@@ -17,7 +17,6 @@ ROOT = "http://%s:%s/jsonrpc" % (HOST, PORT)
 class Logic:
 
     def __init__(self):
-        pass
         self.server = jsonrpclib.ServerProxy(ROOT)
         self.uid = self.server.call(
             service="common", method="login", args=[DB, USER, PASS])
