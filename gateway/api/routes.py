@@ -19,6 +19,13 @@ def make_payment():
     response = logic.make_payment(data)
     return response
 
+@mod.route('/marchantPaymet', methods=['POST'])
+def init_payment():
+    data = request.json
+    logic = Logic()
+    response = logic.init_marchant_payment(data)
+    return response
+
 
 @mod.route('/addPost')
 def add_post():

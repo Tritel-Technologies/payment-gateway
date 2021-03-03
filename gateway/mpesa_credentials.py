@@ -3,12 +3,15 @@ import json
 from requests.auth import HTTPBasicAuth
 from datetime import datetime
 import base64
-
+import os
+from dotenv import load_dotenv
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 class MpesaC2bCredential:
-    consumer_key = 'JCWkwPafHudcGnQ33nZA9yAu7PQ1d5dE'
-    consumer_secret = 'jNupt8t0OhHRXEqQ'
-    api_URL = 'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+    consumer_key = os.environ.get('CONSUMER_KEY')
+    consumer_secret = os.environ.get('CONSUMER_SECRET')
+    api_URL = os.environ.get('API_URL')
 
 
 class MpesaAccessToken:
@@ -28,9 +31,9 @@ class MpesaAccessToken:
 
 class LipanaMpesaPpassword:
     lipa_time = datetime.now().strftime('%Y%m%d%H%M%S')
-    Business_short_code = "7328975"
+    Business_short_code =  os.environ.get('BUSINESS_SHORT_CODE')
     Test_c2b_shortcode = "600775"
-    passkey = 'd75fe098517bdafae9d41322b345cd67b5915a92aa5976a700f44a2149c3728c'
+    passkey = os.environ.get('PASSKEY')
     data_to_encode = Business_short_code + passkey + lipa_time
     online_password = base64.b64encode(data_to_encode.encode())
     decode_password = online_password.decode('utf-8')

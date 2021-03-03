@@ -16,8 +16,8 @@ class Logic:
             unique_id = str(unique_id)[:6]
             tx_ref = unique_id+pay_load['member_number']
             lines = [TransactionLine(
-                amount=x['amount'], 
-                transaction_type=x['transaction_type'], 
+                amount=x['amount'],
+                transaction_type=x['transaction_type'],
                 loan_id=x['loan_id'] if 'loan_id' in x else None) for x in pay_load['lines']]
             transaction = MpesaTransaction(uiid=tx_ref)
             transaction_header = TransactionHeader(
@@ -40,3 +40,10 @@ class Logic:
         transactionHeader_schema = TransactionHeaderSchema()
         data = transactionHeader_schema.dump(transaction)
         return data
+
+    def init_marchant_payment(self, pay_load):
+        with SafMethods() as payments:
+            response = payments.send_push(
+                args=pay_load['amount'], phone_number=pay_load['phone'],
+                uiid=pay_load['uiid'])
+            return response

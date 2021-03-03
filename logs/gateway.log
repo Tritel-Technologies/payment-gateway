@@ -2,3 +2,23 @@
 2020-10-05 12:42:39,465 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
 2020-10-05 12:42:42,537 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
 2020-10-05 13:25:43,082 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
+2021-03-03 12:50:44,831 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:54]
+2021-03-03 12:51:56,821 ERROR: Exception on /api/marchantPaymet [POST] [in /home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/tesfa/projects/payment-gateway/gateway/api/routes.py", line 26, in init_payment
+    response = logic.init_marchant_payment(data)
+  File "/home/tesfa/projects/payment-gateway/gateway/logic/logic.py", line 47, in init_marchant_payment
+    args=pay_load['amount'], phone_number=pay_load['phone'],
+KeyError: 'phone'

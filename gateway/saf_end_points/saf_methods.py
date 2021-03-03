@@ -22,8 +22,12 @@ class SafMethods:
             with MpesaAccessToken() as mpesa_token:
                 access_token = mpesa_token.validated_mpesa_access_token
             amount = 0
-            for line in kwargs['args']:
-                amount += line['amount']
+            lines = kwargs['args']
+            if type(lines) is list:
+                for line in lines:
+                    amount += line['amount']
+            else:
+                amount = lines
             request_body = {
                 "BusinessShortCode": LipanaMpesaPpassword.Business_short_code,
                 "Password": LipanaMpesaPpassword.decode_password,
