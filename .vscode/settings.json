@@ -5,6 +5,12 @@
             "driver": "SQLite",
             "name": "app",
             "database": "${workspaceFolder:payments-gateway}/app.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "app",
+            "database": "${workspaceFolder:payment-gateway}/app.db"
         }
     ],
     "compile-hero.disable-compile-files-on-did-save-code": false,
@@ -20,5 +26,6 @@
     "python.testing.unittestEnabled": true,
     "files.watcherExclude": {
         "**/target": true
-    }
+    },
+    "sqltools.useNodeRuntime": true
 }

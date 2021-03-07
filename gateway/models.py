@@ -60,12 +60,14 @@ class User(db.Model):
         user = User.query.get(data['id'])
         return user
 
+
 class MpesaTransaction(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
-    transaction_type = db.Column(db.String(10),nullable=True,)
-    transaction_id = db.Column(db.String(10),nullable=True)
-    transaction_time = db.Column(db.DateTime,index=True,default=datetime.utcnow)
-    uiid = db.Column(db.String(100),nullable=False,unique=True)
+    id = db.Column(db.Integer, primary_key=True)
+    transaction_type = db.Column(db.String(10), nullable=True,)
+    transaction_id = db.Column(db.String(10), nullable=True)
+    transaction_time = db.Column(
+        db.DateTime, index=True, default=datetime.utcnow)
+    uiid = db.Column(db.String(100), nullable=False, unique=True)
     trasnction_amount = db.Column(db.String(50))
     business_short_code = db.Column(db.String(50))
     bill_ref = db.Column(db.String(20))
@@ -73,47 +75,66 @@ class MpesaTransaction(db.Model):
     first_name = db.Column(db.String(20))
     middle_name = db.Column(db.String(20))
     last_name = db.Column(db.String(20))
-    transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=True)
-    
+    transaction_header_id = db.Column(
+        db.Integer, db.ForeignKey('transaction_header.id'), nullable=True)
+
     def __init__(self, **kwargs):
         super(MpesaTransaction, self).__init__(**kwargs)
 
+
 class TransactionHeader(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     transaction_type = db.Column(db.String())
-    uiid = db.Column(db.String(100),nullable=False,unique=True)
-    time_created = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
-    time_modefied = db.Column(db.DateTime,nullable=True,)
+    uiid = db.Column(db.String(100), nullable=False, unique=True)
+    time_created = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow)
+    time_modefied = db.Column(db.DateTime, nullable=True,)
     completed = db.Column(db.Boolean, nullable=False, default=False)
-    completed_on = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
-    mpesa_transaction = db.relationship('MpesaTransaction', backref='transaction_header', lazy=True,uselist=False)
-    transaction_line = db.relationship('TransactionLine', backref='transaction_header',lazy=True)
+    completed_on = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow)
+    mpesa_transaction = db.relationship(
+        'MpesaTransaction', backref='transaction_header', lazy=True, uselist=False)
+    transaction_line = db.relationship(
+        'TransactionLine', backref='transaction_header', lazy=True)
 
     def __init__(self, **kwargs):
         super(TransactionHeader, self).__init__(**kwargs)
 
+
 class TransactionLine(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     transaction_type = db.Column(db.String(50))
     amount = db.Column(db.Integer)
     loan_id = db.Column(db.Integer)
-    transaction_header_id = db.Column(db.Integer, db.ForeignKey('transaction_header.id'),nullable=False)
+    transaction_header_id = db.Column(db.Integer, db.ForeignKey(
+        'transaction_header.id'), nullable=False)
 
     def __init__(self, **kwargs):
         super(TransactionLine, self).__init__(**kwargs)
+
+
+class Setup(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(100))
+
+
 class MpesaTransactionSchema(ma.ModelSchema):
     """docstring for ClassName"""
     class Meta:
         model = MpesaTransaction
+
 
 class TransactionLineSchema(ma.ModelSchema):
 
     class Meta:
         model = TransactionLine
 
+
 class TransactionHeaderSchema(ma.ModelSchema):
     transaction_line = ma.Nested(TransactionLineSchema, many=True)
     mpesa_transaction = ma.Nested(MpesaTransactionSchema, many=False)
+
     class Meta:
-        fields = ('transaction_type', 'completed', 'uiid','transaction_line','mpesa_transaction')
+        fields = ('transaction_type', 'completed', 'uiid',
+                  'transaction_line', 'mpesa_transaction')
         model = TransactionHeader()

@@ -2,7 +2,7 @@ from flask import Blueprint, request, json, current_app
 from gateway import db
 from gateway.logic.logic import Logic
 from flask import jsonify
-from gateway.models import MpesaTransaction
+from gateway.models import MpesaTransaction, Setup
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
 from datetime import datetime
@@ -44,8 +44,9 @@ def validation_response():
 
 @mod.route('/confirmationCallback', methods=['POST'])
 def confirmation_callback():
+    setup = Setup.query.get(1)
     data = {"params": request.json}
-    odoo_url = 'https://0a0361f45071.ngrok.io/payment/mpesa'
+    odoo_url = setup.url
     requests.post(odoo_url, json=data)
     # tx_ref = request.json['BillRefNumber']
     # datetime_str = request.json['TransTime']

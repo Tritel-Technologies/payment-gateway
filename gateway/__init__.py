@@ -26,6 +26,9 @@ def create_app(config_class=Config):
 
     from gateway.api.routes import mod as mod
     app.register_blueprint(mod)
+
+    from gateway.admin.routes import mod as admin
+    app.register_blueprint(admin)
     if not app.debug:
         # if app.config['MAIL_SERVER']:
         #     auth = None

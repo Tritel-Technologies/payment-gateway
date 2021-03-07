@@ -1,9 +1,4 @@
-2020-10-05 12:40:13,085 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
-2020-10-05 12:42:39,465 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
-2020-10-05 12:42:42,537 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
-2020-10-05 13:25:43,082 INFO: GateWaystartup [in /home/tesfa/projects/Apis/payments-gateway/gateway/__init__.py:54]
-2021-03-03 12:50:44,831 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:54]
-2021-03-03 12:51:56,821 ERROR: Exception on /api/marchantPaymet [POST] [in /home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py:1891]
+2021-03-07 15:14:29,867 ERROR: Exception on /admin/handle_data [GET] [in /home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py:1891]
 Traceback (most recent call last):
   File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -17,8 +12,107 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/tesfa/projects/payment-gateway/gateway/api/routes.py", line 26, in init_payment
-    response = logic.init_marchant_payment(data)
-  File "/home/tesfa/projects/payment-gateway/gateway/logic/logic.py", line 47, in init_marchant_payment
-    args=pay_load['amount'], phone_number=pay_load['phone'],
-KeyError: 'phone'
+  File "/home/tesfa/projects/payment-gateway/gateway/admin/routes.py", line 21, in handle_data
+    return render_template("settings.html")
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/templating.py", line 137, in render_template
+    return _render(
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/settings.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/base.html", line 19, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/settings.html", line 7, in block "content"
+    <!-- <h1>Hello {{ setup.url }}!</h1> -->
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 471, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'setup' is undefined
+2021-03-07 15:14:37,539 ERROR: Exception on /admin/handle_data [GET] [in /home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/tesfa/projects/payment-gateway/gateway/admin/routes.py", line 21, in handle_data
+    return render_template("settings.html")
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/templating.py", line 137, in render_template
+    return _render(
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/settings.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/base.html", line 19, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/settings.html", line 7, in block "content"
+    <!-- <h1>Hello {{ setup.url }}!</h1> -->
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 471, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'setup' is undefined
+2021-03-07 15:15:18,067 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:15:51,567 ERROR: Exception on /admin/handle_data [GET] [in /home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/tesfa/projects/payment-gateway/gateway/admin/routes.py", line 21, in handle_data
+    return render_template("settings.html")
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/templating.py", line 137, in render_template
+    return _render(
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/settings.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/base.html", line 19, in top-level template code
+    {% block content %}{% endblock %}
+  File "/home/tesfa/projects/payment-gateway/gateway/templates/settings.html", line 7, in block "content"
+    <!-- <h1>Hello {{ setup.url }}!</h1> -->
+  File "/home/tesfa/.virtualenvs/payments-env/lib/python3.8/site-packages/jinja2/environment.py", line 471, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'setup' is undefined
+2021-03-07 15:16:21,410 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:17:18,781 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:17:33,397 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:18:10,705 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:18:33,534 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:20:32,627 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:30:38,457 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:33:44,112 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:34:58,503 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:35:54,425 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:38:32,585 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
+2021-03-07 15:38:51,557 INFO: GateWaystartup [in /home/tesfa/projects/payment-gateway/gateway/__init__.py:57]
