@@ -1,4 +1,4 @@
-from flask import Blueprint, request, json, current_app
+from flask import Blueprint, request, json, current_app as app
 from gateway import db
 from gateway.logic.logic import Logic
 from flask import jsonify
@@ -47,7 +47,10 @@ def confirmation_callback():
     setup = Setup.query.get(1)
     data = {"params": request.json}
     odoo_url = setup.url
-    requests.post(odoo_url, json=data)
+    
+    response = requests.post(odoo_url, json=data)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info(response)
     # tx_ref = request.json['BillRefNumber']
     # datetime_str = request.json['TransTime']
     # datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')

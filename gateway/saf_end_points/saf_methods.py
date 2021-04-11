@@ -50,6 +50,7 @@ class SafMethods:
             print(response)
             return response.text
         except Exception as e:
+            print(e)
             return str(e)
 
     def send_money(self, args):
