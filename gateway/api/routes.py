@@ -48,7 +48,7 @@ def confirmation_callback():
     data = {"params": request.json}
     odoo_url = setup.url
     
-    response = requests.post(odoo_url, params=data)
+    response = requests.post(odoo_url,data=data)
     app.logger.setLevel(logging.INFO)
     app.logger.info(response)
     # tx_ref = request.json['BillRefNumber']
