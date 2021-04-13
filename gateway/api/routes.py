@@ -45,7 +45,7 @@ def validation_response():
 @mod.route('/confirmationCallback', methods=['POST'])
 def confirmation_callback():
     setup = Setup.query.get(1)
-    data = {"params": request.json}
+    data = {"params": json.dumps(request.json)}
     odoo_url = setup.url
     
     response = requests.post(odoo_url,data)
