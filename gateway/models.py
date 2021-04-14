@@ -1,4 +1,7 @@
 from datetime import datetime
+
+from itsdangerous import Serializer, BadSignature, SignatureExpired
+from gateway import create_app as app
 from gateway import db
 from gateway import ma
 
@@ -26,15 +29,15 @@ class User(db.Model):
         self.confirmed_on = confirmed_on
         self.phone_number = phone_number
 
-    def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
-
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password_hash)
-
-    def generate_auth_token(self, expiration=60000):
-        s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'id': self.id})
+    # def hash_password(self, password):
+    #     self.password_hash = pwd_context.encrypt(password)
+    #
+    # def verify_password(self, password):
+    #     return pwd_context.verify(password, self.password_hash)
+    #
+    # def generate_auth_token(self, expiration=60000):
+    #     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    #     return s.dumps({'id': self.id})
 
     @staticmethod
     def verify_auth_token(token):

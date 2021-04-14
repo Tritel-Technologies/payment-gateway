@@ -11,7 +11,7 @@ import requests
 mod = Blueprint('api', __name__, url_prefix='/api')
 
 
-@mod.route('/payment', methods=['POST'],)
+@mod.route('/payment', methods=['POST'], )
 def make_payment():
     data = request.json
     print(request.json['header'])
@@ -47,57 +47,75 @@ def confirmation_callback():
     setup = Setup.query.get(1)
     data = {"params": json.dumps(request.json)}
     odoo_url = setup.url
-    
-    response = requests.post(odoo_url,data)
+
+    response = requests.post(odoo_url, data)
     app.logger.setLevel(logging.INFO)
     app.logger.info(response)
-    # tx_ref = request.json['BillRefNumber']
-    # datetime_str = request.json['TransTime']
-    # datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
-    # transaction = MpesaTransaction.query.filter(
-    #     MpesaTransaction.uiid == tx_ref).first()
+    transaction = MpesaTransaction(
+        bill_ref=request.json['BillRefNumber'],
+        uiid=request.json['BillRefNumber'],
+        trasnction_amount=request.json['TransAmount'],
+        first_name=request.json['FirstName'])
 
-    # if transaction is not None:
-    #     transaction.transaction_type = request.json['TransactionType']
-    #     transaction.transaction_id = request.json['TransID']
-    #     transaction.transaction_time = datetime_object
-    #     transaction.trasnction_amount = request.json['TransAmount']
-    #     transaction.business_short_code = request.json['BusinessShortCode']
-    #     transaction.msisdn = request.json['MSISDN']
-    #     transaction.first_name = request.json['FirstName']
-    #     db.session.add(transaction)
-    #     db.session.commit()
-    #     logic = Logic()
-    #     data = logic.get_tx(tx_ref)
-    #     print(data)
-    #     api_url = "https://api-sacco.tritel.co.ke/api/postPayment"
-    #     response = requests.post(
-    #         api_url, json=data)
-
-    # else:
-
-    #     # transaction = MpesaTransaction(
-    #     #     bill_ref=request.json['BillRefNumber'],
-    #     #     uiid=request.json['BillRefNumber'],
-    #     #     trasnction_amount=request.json['TransAmount'],
-    #     #     first_name=request.json['FirstName'])
-
-    #     # db.session.add(transaction)
-    #     # db.session.commit()
-    #     data = {"params":request.json}
-    #     odoo_url = 'https://0a0361f45071.ngrok.io/payment/mpesa'
-    #     requests.post(
-    #         odoo_url, json=data)
-        # payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],
-        #                        phone_number=request.json['MSISDN'], bill_ref=request.json['BillRefNumber'],
-        #                        transaction_id=request.json['TransID'])
-        # with Logic() as logic:
-        #     logic.deposit(res['lines'], res)
+    db.session.add(transaction)
+    db.session.commit()
     context = {
         "ResultCode": 0,
         "ResultDesc": "Accepted"
     }
     return "json(context)"
+
+
+@mod.route('/mpesa_transaction', method=['GET'])
+def get_transaction():
+    bill_ref = request.json['bill_ref']
+    transaction = MpesaTransaction.query.filter(
+        MpesaTransaction.uiid == bill_ref).first()
+    return jsonify({"data": transaction})
+
+
+# tx_ref = request.json['BillRefNumber']
+# datetime_str = request.json['TransTime']
+# datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
+# transaction = MpesaTransaction.query.filter(
+#     MpesaTransaction.uiid == tx_ref).first()
+
+# if transaction is not None:
+#     transaction.transaction_type = request.json['TransactionType']
+#     transaction.transaction_id = request.json['TransID']
+#     transaction.transaction_time = datetime_object
+#     transaction.trasnction_amount = request.json['TransAmount']
+#     transaction.business_short_code = request.json['BusinessShortCode']
+#     transaction.msisdn = request.json['MSISDN']
+#     transaction.first_name = request.json['FirstName']
+#     db.session.add(transaction)
+#     db.session.commit()
+#     logic = Logic()
+#     data = logic.get_tx(tx_ref)
+#     print(data)
+#     api_url = "https://api-sacco.tritel.co.ke/api/postPayment"
+#     response = requests.post(
+#         api_url, json=data)
+
+# else:
+
+#     # transaction = MpesaTransaction(
+#     #     bill_ref=request.json['BillRefNumber'],
+#     #     uiid=request.json['BillRefNumber'],
+#     #     trasnction_amount=request.json['TransAmount'],
+#     #     first_name=request.json['FirstName'])
+
+#     # db.session.add(transaction)
+#     # db.session.commit()
+#     data = {"params":request.json}
+#     odoo_url = 'https://0a0361f45071.ngrok.io/payment/mpesa'
+#     requests.post(
+#         odoo_url, json=data)
+# payment = MpesaTransaction(name=request.json['FirstName'], amount=request.json['TransAmount'],
+#                        phone_number=request.json['MSISDN'], bill_ref=request.json['BillRefNumber'],
+#                        transaction_id=request.json['TransID'])
+# with Logic() as logic:
+#     logic.deposit(res['lines'], res)
 
 
 @mod.route('/getTx', methods=['POST'])
