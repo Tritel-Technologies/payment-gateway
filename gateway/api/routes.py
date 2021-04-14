@@ -72,7 +72,7 @@ def get_transaction():
     transaction = MpesaTransaction.query.filter(
         MpesaTransaction.uiid == bill_ref).first()
     transaction_shema = MpesaTransactionSchema()
-    serilized_transaction = transaction_shema.dump(transaction, many=True)
+    serilized_transaction = transaction_shema.dump(transaction)
     return jsonify({"data": serilized_transaction})
 
 
