@@ -66,7 +66,7 @@ def confirmation_callback():
     return "json(context)"
 
 
-@mod.route('/mpesa_transaction', method=['GET'])
+@mod.route('/mpesa_transaction', methods=['GET'])
 def get_transaction():
     bill_ref = request.json['bill_ref']
     transaction = MpesaTransaction.query.filter(
