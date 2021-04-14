@@ -73,7 +73,7 @@ def get_transaction():
         MpesaTransaction.uiid == bill_ref).first()
     transaction_shema = MpesaTransactionSchema()
     serilized_transaction = transaction_shema.dump(transaction)
-    return jsonify({"data": serilized_transaction})
+    return jsonify( serilized_transaction)
 
 
 # tx_ref = request.json['BillRefNumber']
