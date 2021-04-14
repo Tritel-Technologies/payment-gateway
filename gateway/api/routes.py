@@ -2,7 +2,7 @@ from flask import Blueprint, request, json, current_app as app
 from gateway import db
 from gateway.logic.logic import Logic
 from flask import jsonify
-from gateway.models import MpesaTransaction, Setup
+from gateway.models import MpesaTransaction, Setup, MpesaTransactionSchema
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import logging
 from datetime import datetime
@@ -71,7 +71,9 @@ def get_transaction():
     bill_ref = request.json['bill_ref']
     transaction = MpesaTransaction.query.filter(
         MpesaTransaction.uiid == bill_ref).first()
-    return jsonify({"data": transaction})
+    transaction_shema = MpesaTransactionSchema()
+    serilized_transaction = transaction_shema.dump(transaction, many=True)
+    return jsonify({"data": serilized_transaction})
 
 
 # tx_ref = request.json['BillRefNumber']
