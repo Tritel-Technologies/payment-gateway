@@ -51,12 +51,17 @@ def confirmation_callback():
     response = requests.post(odoo_url, data)
     app.logger.setLevel(logging.INFO)
     app.logger.info(response)
+    datetime_str = request.json['TransTime']
+    datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
     transaction = MpesaTransaction(
         bill_ref=request.json['BillRefNumber'],
         uiid=request.json['BillRefNumber'],
         trasnction_amount=request.json['TransAmount'],
-        first_name=request.json['FirstName'])
-
+        first_name=request.json['FirstName'],
+        msisdn = request.json['MSISDN'],
+        transaction_id = request.json['TransID'],
+        business_short_code=request.json['BusinessShortCode'],
+        transaction_time= datetime_object)
     db.session.add(transaction)
     db.session.commit()
     context = {
