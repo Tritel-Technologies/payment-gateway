@@ -31,7 +31,7 @@ class MpesaAccessToken:
 
 class LipanaMpesaPpassword:
     lipa_time = datetime.now().strftime('%Y%m%d%H%M%S')
-    Business_short_code =  os.environ.get('BUSINESS_SHORT_CODE')
+    Business_short_code = os.environ.get('BUSINESS_SHORT_CODE')
     Test_c2b_shortcode = "600775"
     passkey = os.environ.get('PASSKEY')
     data_to_encode = Business_short_code + passkey + lipa_time

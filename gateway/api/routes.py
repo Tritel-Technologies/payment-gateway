@@ -76,14 +76,14 @@ def get_transaction():
     if 'phone_number' in request.json:
         phone_number = request.json['phone_number']
         transaction = MpesaTransaction.query.filter(
-            MpesaTransaction.msisdn == phone_number).first()
+            MpesaTransaction.msisdn == phone_number).last()
         transaction_shema = MpesaTransactionSchema()
         serilized_transaction = transaction_shema.dump(transaction)
         return serilized_transaction
 
     bill_ref = request.json['bill_ref']
     transaction = MpesaTransaction.query.filter(
-        MpesaTransaction.uiid == bill_ref).first()
+        MpesaTransaction.uiid == bill_ref).last()
     transaction_shema = MpesaTransactionSchema()
     serilized_transaction = transaction_shema.dump(transaction)
     return serilized_transaction
