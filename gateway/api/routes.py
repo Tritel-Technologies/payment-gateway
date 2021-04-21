@@ -58,10 +58,10 @@ def confirmation_callback():
         uiid=request.json['BillRefNumber'],
         trasnction_amount=request.json['TransAmount'],
         first_name=request.json['FirstName'],
-        msisdn = request.json['MSISDN'],
-        transaction_id = request.json['TransID'],
+        msisdn=request.json['MSISDN'],
+        transaction_id=request.json['TransID'],
         business_short_code=request.json['BusinessShortCode'],
-        transaction_time= datetime_object)
+        transaction_time=datetime_object)
     db.session.add(transaction)
     db.session.commit()
     context = {
@@ -73,6 +73,14 @@ def confirmation_callback():
 
 @mod.route('/mpesa_transaction', methods=['GET'])
 def get_transaction():
+    if 'phone_number' in request.json:
+        phone_number = request.json['phone_number']
+        transaction = MpesaTransaction.query.filter(
+            MpesaTransaction.msisdn == phone_number).first()
+        transaction_shema = MpesaTransactionSchema()
+        serilized_transaction = transaction_shema.dump(transaction)
+        return serilized_transaction
+
     bill_ref = request.json['bill_ref']
     transaction = MpesaTransaction.query.filter(
         MpesaTransaction.uiid == bill_ref).first()
