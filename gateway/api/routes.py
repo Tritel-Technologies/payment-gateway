@@ -75,14 +75,14 @@ def confirmation_callback():
 def get_transaction():
     if 'phone_number' in request.json:
         phone_number = request.json['phone_number']
-        transaction = MpesaTransaction.query.order_by(MpesaTransaction.id).filter(
+        transaction = MpesaTransaction.query.order_by(-MpesaTransaction.id).filter(
             MpesaTransaction.msisdn == phone_number).first()
         transaction_shema = MpesaTransactionSchema()
         serilized_transaction = transaction_shema.dump(transaction)
         return serilized_transaction
 
     bill_ref = request.json['bill_ref']
-    transaction = MpesaTransaction.query.order_by(MpesaTransaction.id).filter(
+    transaction = MpesaTransaction.query.order_by(-MpesaTransaction.id).filter(
         MpesaTransaction.uiid == bill_ref).first()
     transaction_shema = MpesaTransactionSchema()
     serilized_transaction = transaction_shema.dump(transaction)
