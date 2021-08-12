@@ -44,11 +44,11 @@ def validation_response():
 
 @mod.route('/confirmationCallback', methods=['POST'])
 def confirmation_callback():
-    setup = Setup.query.get(1)
+    """ setup = Setup.query.get(1)
     data = {"params": json.dumps(request.json)}
     odoo_url = setup.url
 
-    response = requests.post(odoo_url, data)
+    response = requests.post(odoo_url, data) """
     app.logger.setLevel(logging.INFO)
     app.logger.info(response)
     datetime_str = request.json['TransTime']
