@@ -50,7 +50,7 @@ def confirmation_callback():
 
     response = requests.post(odoo_url, data) """
     app.logger.setLevel(logging.INFO)
-    app.logger.info(response)
+    """ app.logger.info(response) """
     datetime_str = request.json['TransTime']
     datetime_object = datetime.strptime(datetime_str, '%Y%m%d%H%M%S')
     transaction = MpesaTransaction(
